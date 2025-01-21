@@ -38,7 +38,7 @@ if (equal != true) {
 let num_1 = Number(prompt('введіть перше число'));
 let num_2 = Number(prompt('введіть друге число'));
 let num_3 = Number(prompt('введіть третє число'));
-let num_4 = (num_1 + num_2 + num_3) / 2;
+let num_4 = (num_1 + num_2 + num_3) / 3;
 
 alert(`середнє арифметичне складає ${num_4}`);
 
