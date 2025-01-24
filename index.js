@@ -1,27 +1,37 @@
-let numOrStr = prompt('input number or string');
-console.log(numOrStr)
+const userAgeOfBirth = prompt('Вкажіть Ваш рік народження.');
 
-if(numOrStr === null) {
-    console.log('ви відмінили')
-} else if( numOrStr.trim() === '' ) {
-    console.log('Empty String');
-} else if( isNaN( +numOrStr ) ) {
-    console.log(' number is Ba_NaN')
+if (userAgeOfBirth == null) {
+    alert("Шкода, що Ви не захотіли ввести свій рік народження.");
 } else {
-    console.log('OK!')
+    const userCity = prompt('Вкажіть місто в якому Ви проживаєте.');
+if (userCity == null) {
+    alert("Шкода, що Ви не захотіли ввести своє місто.");
+} else {
+    const userSport = prompt('Вкажіть Ваш улюблений вид спорту');
+if (userSport == null) {
+    alert("Шкода, що Ви не захотіли ввести свій вид спорту.");
+  } else {
+    let cityMessage;
+if (userCity === "Київ") {
+    cityMessage = "Ти живеш в столиці України";
+} else if (userCity === "Вашингтон") {
+    cityMessage = "Ти живеш в столиці США";
+} else if (userCity === "Лондон") {
+    cityMessage = "Ти живеш в столиці Великої Британії";
+} else {
+    cityMessage = `Ти живеш в місті ${userCity}`; 
+} 
+    let sportMessage;
+if (userSport === "Бокс") {
+    sportMessage = "Круто! Хочеш стати Майком Тайсоном";
+} else if (userSport === "Футбол") {
+    sportMessage = "Круто! Хочеш стати Ліонелем Мессі";
+} else if (userSport === "Баскетбол") {
+    sportMessage = "Круто! Хочеш стати Майклом Джорданом";
+} else {
+    sportMessage = `Круто! ${userSport} це чудовий вид спорту!`;
 }
-
-
-switch (true) {
-    case numOrStr === null :
-        console.log('ви відмінили');
-        break;
-    case numOrStr.trim() === '' :
-        console.log('Empty String');
-        break;
-    case isNaN( +numOrStr) :
-        console.log(' number is Ba_NaN');
-        break
-    default: 
-        console.log('OK!')
+alert(`Ти ${userAgeOfBirth} року народження\n${cityMessage}\n${sportMessage}`);
+}
+  }
 }
