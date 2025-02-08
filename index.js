@@ -1,101 +1,62 @@
 ///
-let i = 10;
 let result = "";
-
-while (i <= 20) {
+for(let i = 20; i <= 30; i += 0.5) {
     result += i;
-    if (i < 20) {
-        result += ", ";
+    if(i < 30) {
+        result += " ";
     }
-    i++;
 }
-alert(result);
+console.log(result);
 
 ///
+let oneDollar = 40;
 result = "";
-for(let i = 10; i <= 20; i++) {
-    result += i * i + ", ";
-}
-alert(result);
-
-///
-result = 0;
-for(let i = 0; i <= 15; i++) {
-    result += i;
-}
-alert(result);
-
-///
-result = 1;
-for(let i = 15; i <= 35; i++) {
-    result *= i;
-}
-alert(result);
-
-///
-result = 0;
-for(let i = 1; i <= 500; i++) {
-    result += i;
-}
-alert(result / 500);
-
-///
-result = 0;
-for(let i = 30; i <= 80; i++) {
-    if(i % 2 !== 0) {
-    continue
+for(let i = 10; i <= 100; i += 10) {
+    result += i * oneDollar;
+    if(i < 100) {
+        result += " ";
     }
-    result += i;
 }
-alert(result);
+console.log(result);
 
 ///
+let N = Number(prompt("введіть число N"));
 result = "";
-for(let i = 100; i <= 200; i += 3) {
-    result += i;
-    if (i + 3 < 200) {
-        result += ", ";
+
+for(let i = 1; i <= 100; i++) {
+    if(i * i > N) {
+        break;
     }
+    result += i + " ";
 }
-alert(result);
+console.log(result);
 
 ///
-let numb = Number(prompt("Введіть число!"));
+let numb = Number(prompt("Введіть число"));
+let isPrime = true;
 
-result = "";
-for(let i = 1; i <= numb; i++) {
-    if(numb % i === 0) {
-        result += i + " ";
+for (let i = 2; i < numb; i++) {
+    if (numb % i === 0) {
+        isPrime = false;
+        break;
     }
 }
-alert(result);
 
-///
-let numb_1 = Number(prompt("Введіть число!"));
-
-result = "";
-for(let i = 1; i <= numb_1; i++) {
-    if(numb_1 % i === 0 && i % 2 === 0) {
-        result += i + " ";
-    }
+if (numb > 1 && isPrime) {
+    alert(`${numb} - просте число`);
+} else {
+    alert(`${numb} - складене число`);
 }
-alert(result);
 
 ///
-let numb_2 = Number(prompt("Введіть число!"));
+let num = Number(prompt("Введіть число"));
 
-result = 0;
-for(let i = 1; i <= numb_2; i++) {
-    if(numb_2 % i === 0 && i % 2 === 0) {
-        result += i;
-    }
+while (num > 1 && num % 3 === 0) {
+    num /= 3;
 }
-alert(result);
 
-///
-for(i = 1; i <= 10; i++) {
-    for(j = 1; j <= 10; j++) {
-        console.log(`${i} * ${j} = ${i * j}`);
-    }
-
+if (num === 1) {
+    alert(`Число можна отримати піднесенням 3 до степеня`);
+} else {
+    alert(`Число не можна отримати піднесенням 3 до степеня`);
 }
