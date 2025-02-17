@@ -1,114 +1,63 @@
+let users = [{
+    "index": 0,
+    "isActive": true,
+    "balance": "$2,226.60",
+    "name": "Eugenia Sawyer",
+    "gender": "female",
+    "phone": "+1 (840) 583-3207",
+    "address": "949 John Street, Rose, Puerto Rico, 1857"
+}, {
+    "index": 1,
+    "isActive": true,
+    "balance": "$2,613.77",
+    "name": "Pauline Gallegos",
+    "gender": "female",
+    "phone": "+1 (985) 593-3328",
+    "address": "328 Greenpoint Avenue, Torboy, North Dakota, 6857"
+}, {
+    "index": 2,
+    "isActive": false,
+    "balance": "$3,976.41",
+    "name": "Middleton Chaney",
+    "gender": "male",
+    "phone": "+1 (995) 591-2478",
+    "address": "807 Fleet Walk, Brutus, Arkansas, 9783"
+}, {
+    "index": 3,
+    "isActive": true,
+    "balance": "$1,934.58",
+    "name": "Burns Poole",
+    "gender": "male",
+    "phone": "+1 (885) 559-3422",
+    "address": "730 Seba Avenue, Osage, Alabama, 6290"
+}, {
+    "index": 4,
+    "isActive": true,
+    "balance": "$3,261.65",
+    "name": "Mcfadden Horne",
+    "gender": "male",
+    "phone": "+1 (942) 565-3988",
+    "address": "120 Scholes Street, Kirk, Michigan, 1018"
+}, {
+    "index": 5,
+    "isActive": false,
+    "balance": "$1,790.56",
+    "name": "Suzette Lewis",
+    "gender": "female",
+    "phone": "+1 (837) 586-3283",
+    "address": "314 Dunne Place, Bawcomville, Guam, 9053"
+    }]
 
-// Завдання 1
-// Створення масиву по параметрах користувача;
-let arrLength = prompt("введіть кількість елементів масиву");
-let array = [];
+let phones = users
+    .filter(user => parseFloat(user.balance.replace(/[$,]/g, '')) > 2000)
+    .map(user => user.phone);
 
-    for (let i = 0; i < arrLength; i++) {
-        let element = prompt(`Введіть елемент ${i + 1}:`);
-        array.push(element);
-    }
-    console.log(array);
+console.log(phones);
 
-// Сортування масиву;
-array.sort(function(a, b) {
-    return a - b;
-});
-console.log(array);
+// Сума всіх балансів
+let totalBalance = users
+    .map(user => parseFloat(user.balance.replace(/[$,]/g, '')))
+    .reduce((sum, balance) => sum + balance, 0);
 
-// Видалення елементів з масиву;
-array.splice(1, 3);
-console.log(array);
+console.log(totalBalance.toFixed(2));
 
-
-/// Завдання 2
-const newArray = [16, -37, 54, -4, 72, -56, 47, 4, -16, 25, -37, 46, 4, -51, 27, -63, 4, -54, 76, -4, 12, -35, 4, 47];
-
-// Сума і кількість позитивних елементів;
-let sum = 0;
-let count = 0;
-
-for(let num of newArray) {
-    if (num > 0) {
-        sum += num;
-        count++;
-    }
-}
-console.log("Кількість позитивних елементів:", count);
-console.log("Сума позитивних елементів:", sum);
-
-// Мінімальний елемент масиву і його порядковий номер;
-let minElement = newArray[0]; 
-let minIndex = 0; 
-
-for (let i = 1; i < newArray.length; i++) {
-    if (newArray[i] < minElement) {
-        minElement = newArray[i];
-        minIndex = i;
-    }
-}
-console.log("Мінімальний елемент масиву:", minElement);
-console.log("Його порядковий номер (індекс):", minIndex);
-
-// Максимальний елемент масиву і його порядковий номер;
-let maxElement = newArray[0]; 
-let maxIndex = 0; 
-
-for (let i = 1; i < newArray.length; i++) {
-    if (newArray[i] > maxElement) {
-        maxElement = newArray[i];
-        maxIndex = i;
-    }
-}
-console.log("Максимальний елемент масиву:", maxElement);
-console.log("Його порядковий номер (індекс):", maxIndex);
-
-// Кількість негативних елементів;
-let countNegative = 0;
-
-for(let num of newArray) {
-    if (num < 0) {
-        countNegative++;
-    }
-}
-console.log("Кількість негативних елементів:", countNegative);
-
-// Кількість непарних позитивних елементів і їх сума;
-let evenSum = 0;
-let evenCount = 0;
-
-for(let num of newArray) {
-    if (num > 0 && num % 2 !== 0) {
-        evenSum += num;
-        evenCount++;
-    }
-}
-console.log("Кількість непарних позитивних елементів:", evenCount);
-console.log("Сума непарних позитивних елементів:", evenSum);
-
-// Кількість парних позитивних елементів і їх сума;
-let notEvenSum = 0;
-let notEvenCount = 0;
-
-for(let num of newArray) {
-    if (num > 0 && num % 2 === 0) {
-        notEvenSum += num;
-        notEvenCount++;
-    }
-}
-console.log("Кількість парних позитивних елементів:", notEvenCount);
-console.log("Сума парних позитивних елементів:", notEvenSum);
-
-// Добуток позитивних елементів;
-let prod = 1;
-
-for(let num of newArray) {
-    if (num > 0) {
-        prod *= num;
-    }
-}
-console.log("Добуток позитивних елементів:", prod);
-
-// Знайти найбільший серед елементів масиву, решту занулити;
-let nullArray = newArray.map(num => (num === maxElement? num : 0));
-console.log("Новий масив з найбільшим елементом: ", nullArray);
