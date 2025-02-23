@@ -1,8 +1,10 @@
-const array = [1, 2, 3, 4, 5, 6, 7];
+const array = [1, 2, 5, 3, 4, 5, 6, 5, 7];
 
 function removeElement(array, item) {
-   let element = array.indexOf(item);
-    array.splice(element, 1);
+    let index;
+    while ((index = array.indexOf(item)) !== -1) {
+        array.splice(index, 1);
+    }
     console.log(array);
 }
 
