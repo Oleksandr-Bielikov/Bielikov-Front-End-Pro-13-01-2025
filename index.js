@@ -1,12 +1,13 @@
-const array = [1, 2, 5, 3, 4, 5, 6, 5, 7];
+const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
-function removeElement(array, item) {
-    let index;
-    while ((index = array.indexOf(item)) !== -1) {
-        array.splice(index, 1);
+function generateKey(length, characters) {
+    let keyString = "";
+    for (let i = 1; i <= length; i++) {
+        let random = Math.floor(Math.random() * characters.length);
+        keyString += characters.substring(random, random + 1);
     }
-    console.log(array);
+    return keyString;
 }
 
-
-removeElement(array, 5);
+const key = generateKey(16, characters);
+console.log(key);
