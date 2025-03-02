@@ -13,13 +13,13 @@ console.log(sum(5));
 console.log(sum(20));
 
 // Даний масив з елементами різних типів. Створити функцію, яка вираховує середнє арифметичне лише числових елементів даного масиву.
-let arr = [1, 2, 'qwerty', 3, 'John', 4, 'apple', 5, NaN];
+let arr = [1, 2, 'qwerty', 3, 'John', 4, 'apple', 5, NaN, Infinity];
 
 function averageOfNum(arr) {
   let sum = 0;
   let count = 0;
     for (let i of arr) {
-        if (typeof i == 'number' && !isNaN(i)) {
+        if (typeof i == 'number' && !isNaN(i) && isFinite(i)) {
           sum += i;
           count++;
         }
