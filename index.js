@@ -1,65 +1,46 @@
-// Є масив об'єктів з товарами та їх цінами. Вивести в консоль список із даними по всіх товарах (кожен товар на окремому рядку в консолі). 
-const market = [
-    {
-        position: '1',
-        name: 'phone',
-        price: 2000
-    },
-    {
-        position: '2',
-        name: 'TV',
-        price: 3000
-    },
-    {
-        position: '3',
-        name: 'camera',
-        price: 4000
-    },
-    {
-        position: '4',
-        name: 'notebook',
-        price: 5000
-    }
-];
+let slider = document.querySelector('.images');
+let prevButton = document.querySelector('#prev');
+let nextButton = document.querySelector('#next');
+let slides = slider.querySelectorAll('img');
+let slideIndex = 0;
 
-market.forEach(item => { console.log(`${item.position}. ${item.name} - ${item.price}`) });
+prevButton.addEventListener('click', showPreviousSlide);
+nextButton.addEventListener('click', showNextSlide);
 
-
-/* Від користувача отримати номер товару (реалізувати перевірку на правильність введення номера) та кількість (також реалізувати валідацію), 
-вивести на сторінку підсумкову вартість покупки. Якщо вартість перевищує 10.000грн, розрахувати знижку в 20% і повідомити про це користувача. */
-function calculateOfItems() {
-
-    function validateItem() {
-        let positionOfItem;
-        while (true) {
-            positionOfItem = parseInt(Number(prompt('Введіть номер товару')));
-            if (!isNaN(positionOfItem) && isFinite(positionOfItem) && (positionOfItem > 0 && positionOfItem <= 4)) {
-                return market[positionOfItem - 1];
-            } else {
-                alert('Введіть коректне значення');
-            }
-        }
-    }
-    const item = validateItem();
-
-    function validateQuantity() {
-        let quantityOfItem;
-        while (true) {
-            quantityOfItem = parseInt(Number(prompt('Введіть кількість одиниць товару')));
-            if (!isNaN(quantityOfItem) && isFinite(quantityOfItem) && quantityOfItem > 0) {
-                return quantityOfItem;
-            } else {
-                alert('Введіть коректне значення');
-            }
-        }
-    }
-    const quantity = validateQuantity();
-
-    const sum = item.price * quantity;
-    if (sum < 10000) {
-        alert(`Загальна сума до оплати складає: ${sum} грн.`);
+function updateSlider() {
+  for (let i = 0; i < slides.length; i++) {
+    if (i === slideIndex) {
+      slides[i].style.display = 'block';
     } else {
-        alert(`Ваша сума до оплати перевищує 10000 грн, і складає ${sum} грн, тому застосовано знижку -20%. Загальна сума до оплати складає: ${sum * 0.8} грн.`);
+      slides[i].style.display = 'none';
     }
+  }
+
+  if (slideIndex === 0) {
+    prevButton.disabled = true;
+  } else {
+    prevButton.disabled = false;
+  }
+
+  if (slideIndex === slides.length - 1) {
+    nextButton.disabled = true;
+  } else {
+    nextButton.disabled = false;
+  }
 }
-calculateOfItems();
+
+function showPreviousSlide() {
+  if (slideIndex > 0) {
+    slideIndex--;
+    updateSlider();
+  }
+}
+
+function showNextSlide() {
+  if (slideIndex < slides.length - 1) {
+    slideIndex++;
+    updateSlider();
+  }
+}
+
+updateSlider();
