@@ -2,9 +2,6 @@ const form = document.getElementById('form');
 const formContainer = document.getElementById('form-container');
 const table = document.getElementById('table');
 
-const languages = document.querySelectorAll('input[name="language"]');
-
-
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -14,6 +11,7 @@ form.addEventListener('submit', function (event) {
     let gender = form.elements['gender'].value;
     let city = form.elements['city'].value;
     let adress = form.elements['adress'].value;
+    let languages = document.querySelectorAll('input[name="language"]');
 
     let selectedLanguages = [];
     languages.forEach((box) => {
