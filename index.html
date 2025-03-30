@@ -6,42 +6,125 @@
     <title>Document</title>
   </head>
   <body>
-    <div style="display: flex; flex-direction: row; gap: 50px">
-      <div>
-        <h3>Перелік категорій</h3>
-        <p>AVTO</p>
-        <p>MOTO</p>
-      </div>
-      <div>
-        <h3>Перелік товарів</h3>
-        <ul class="avto" style="display: none">
-          <li>Avto 1</li>
-          <li>Avto 2</li>
-        </ul>
-        <ul class="moto" style="display: none">
-          <li>Moto 1</li>
-          <li>Moto 2</li>
-        </ul>
-      </div>
-      <section>
-        <h3>Інформація про товар</h3>
-        <div class="avto-1" style="display: none">
-          <p>Avto 1. Price: 10000</p>
-          <button class="button">Buy</button>
-        </div>
-        <div class="avto-2" style="display: none">
-          <p>Avto 2. Price: 10000</p>
-          <button class="button">Buy</button>
-        </div>
-        <div class="moto-1" style="display: none">
-          <p>Moto 1. Price: 10000</p>
-          <button class="button">Buy</button>
-        </div>
-        <div class="moto-2" style="display: none">
-          <p>Moto 2. Price: 10000</p>
-          <button class="button">Buy</button>
-        </div>
-      </section>
+    <div id="form-container">
+      <form id="form" action="/final-point.php " method="get">
+        <fieldset>
+          <legend>Форма для реєстрації</legend>
+          <fieldset>
+            <legend>Ваші персональні дані</legend>
+            <label for="name">Ім'я</label>
+            <input type="text" name="name" id="name" required />
+            <label for="surname">Прізвище</label>
+            <input type="text" name="surname" id="surname" required />
+            <label for="date">Дата народження</label>
+            <input type="text" name="date" id="date" required /><br /><br />
+            Стать:
+            <label for="male">Чоловік</label>
+            <input
+              type="radio"
+              id="male"
+              name="gender"
+              value="Чоловік"
+              required
+            />
+            <label for="female">Жінка</label>
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="Жінка"
+              required
+            />
+          </fieldset>
+          <fieldset>
+            <legend>Ваше місцезнаходження</legend>
+            <label for="city">Оберіть Ваше місто</label>
+            <select id="city" name="city">
+              <option>---</option>
+              <option>Київ</option>
+              <option>Дніпро</option>
+              <option>Харків</option>
+              <option>Черкаси</option>
+              <option>Івано-Франківськ</option>
+            </select>
+            <br />
+            <br />
+            <label for="adress">Вкажіть Вашу адресу</label>
+            <textarea
+              id="adress"
+              name="adress"
+              rows="5"
+              cols="30"
+              required
+            ></textarea>
+          </fieldset>
+          <fieldset>
+            <legend>Оберіть мови, якими Ви володієте</legend>
+            <label for="ukrainian">Українська</label>
+            <input
+              type="checkbox"
+              id="ukrainian"
+              name="language"
+              value="Українська"
+            />
+            <label for="english">Англійська</label>
+            <input
+              type="checkbox"
+              id="english"
+              name="language"
+              value="Англійська"
+            />
+            <label for="german">Німецька</label>
+            <input
+              type="checkbox"
+              id="german"
+              name="language"
+              value="Німецька"
+            />
+            <label for="french">Французька</label>
+            <input
+              type="checkbox"
+              id="french"
+              name="language"
+              value="Французька"
+            />
+          </fieldset>
+        </fieldset>
+        <br />
+        <input type="submit" class="button" value="Зберегти" />
+      </form>
+    </div>
+    <div id="table" style="display: none">
+      <table>
+        <tr>
+          <td>Ім'я</td>
+          <td id="res-name"></td>
+        </tr>
+        <tr>
+          <td>Прізвище</td>
+          <td id="res-surname"></td>
+        </tr>
+        <tr>
+          <td>Дата народження</td>
+          <td id="res-date"></td>
+        </tr>
+        <tr>
+          <td>Стать</td>
+          <td id="res-gender"></td>
+        </tr>
+        <tr>
+          <td>Місто</td>
+          <td id="res-city"></td>
+        </tr>
+        <tr>
+          <td>Адреса</td>
+          <td id="res-adress"></td>
+        </tr>
+        <tr>
+          <td>Мови</td>
+          <td id="res-languages"></td>
+        </tr>
+      </table>
     </div>
     <script src="index.js"></script>
   </body>
