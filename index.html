@@ -43,6 +43,105 @@
         </div>
       </section>
     </div>
+    <div id="form-container" style="display: none">
+      <form id="form" action="/final-point.php " method="get">
+        <fieldset>
+          <legend>Форма для реєстрації</legend>
+          <label for="name">Ім'я</label>
+          <input type="text" name="name" id="name" required />
+          <label for="surname">Прізвище</label>
+          <input type="text" name="surname" id="surname" required />
+          <label for="second-name">По-батькові</label>
+          <input
+            type="text"
+            name="second-name"
+            id="second-name"
+            required
+          /><br /><br />
+          <label for="city">Оберіть Ваше місто</label>
+          <select id="city" name="city" required>
+            <option disabled selected>---</option>
+            <option>Київ</option>
+            <option>Дніпро</option>
+            <option>Харків</option>
+            <option>Черкаси</option>
+            <option>Івано-Франківськ</option>
+          </select>
+          <br />
+          <label for="post">Вкажіть відділення Нової Пошти</label>
+          <input type="text" name="post" id="post" required />
+          <br />
+          Оберіть спосіб оплати:
+          <label for="after-pay">Післяплата</label>
+          <input
+            type="radio"
+            id="after-pay"
+            name="pay"
+            value="Післяплата"
+            required
+          />
+          <label for="card-pay">На банківську картку</label>
+          <input
+            type="radio"
+            id="card-pay"
+            name="pay"
+            value="На банківську картку"
+            required
+          />
+          <br />
+          <label for="quantity">Вкажіть кількість одиниць товару</label>
+          <input type="text" name="quantity" id="quantity" required />
+          <br />
+          <br />
+          <label for="comment">Вкажіть коментар до замовлення</label>
+          <textarea
+            id="comment"
+            name="comment"
+            rows="5"
+            cols="30"
+            placeholder="Не більше 500 символів"
+          ></textarea>
+        </fieldset>
+        <input type="submit" id="send-button" />
+      </form>
+    </div>
+    <div id="table" style="display: none">
+      <h3>Інформація про товар та доставку</h3>
+      <table>
+        <tr>
+          <td>Ім'я</td>
+          <td id="res-name"></td>
+        </tr>
+        <tr>
+          <td>Прізвище</td>
+          <td id="res-surname"></td>
+        </tr>
+        <tr>
+          <td>По-батькові</td>
+          <td id="res-second-name"></td>
+        </tr>
+        <tr>
+          <td>Місто</td>
+          <td id="res-city"></td>
+        </tr>
+        <tr>
+          <td>Відділення пошти</td>
+          <td id="res-post"></td>
+        </tr>
+        <tr>
+          <td>Метод оплати</td>
+          <td id="res-pay"></td>
+        </tr>
+        <tr>
+          <td>Кількість</td>
+          <td id="res-quantity"></td>
+        </tr>
+        <tr>
+          <td>Коментарі до замовлення</td>
+          <td id="res-comment"></td>
+        </tr>
+      </table>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>
