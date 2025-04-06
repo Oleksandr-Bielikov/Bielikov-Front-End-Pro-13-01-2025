@@ -3,44 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Інтернет-магазин</title>
   </head>
   <body>
     <div style="display: flex; flex-direction: row; gap: 50px">
       <div>
-        <h3>Перелік категорій</h3>
-        <p>AVTO</p>
-        <p>MOTO</p>
+        <h2>Перелік категорій</h2>
+        <button class="category" data-target="avto">Авто</button>
+        <button class="category" data-target="moto">Мото</button>
       </div>
-      <div>
-        <h3>Перелік товарів</h3>
-        <ul class="avto" style="display: none">
-          <li>Avto 1</li>
-          <li>Avto 2</li>
-        </ul>
-        <ul class="moto" style="display: none">
-          <li>Moto 1</li>
-          <li>Moto 2</li>
-        </ul>
+      <div id="avto-div" style="display: none">
+        <h3>Перелік товарів категорії "Авто"</h3>
+        <p>BMW</p>
+        <p>Audi</p>
       </div>
-      <section>
-        <h3>Інформація про товар</h3>
-        <div class="avto-1" style="display: none">
-          <p>Avto 1. Price: 10000</p>
-          <button class="button">Buy</button>
-        </div>
-        <div class="avto-2" style="display: none">
-          <p>Avto 2. Price: 10000</p>
-          <button class="button">Buy</button>
-        </div>
-        <div class="moto-1" style="display: none">
-          <p>Moto 1. Price: 10000</p>
-          <button class="button">Buy</button>
-        </div>
-        <div class="moto-2" style="display: none">
-          <p>Moto 2. Price: 10000</p>
-          <button class="button">Buy</button>
-        </div>
+      <div id="moto-div" style="display: none">
+        <h3>Перелік товарів категорії "Мото"</h3>
+        <p>Honda</p>
+        <p>Kawasaki</p>
+      </div>
+      <section id="bmw" style="display: none">
+        <h5>BMW</h5>
+        <p>Class: Sport</p>
+        <p class="price">Price: 20000</p>
+        <button class="buy-button">Buy</button>
+      </section>
+      <section id="audi" style="display: none">
+        <h5>Audi</h5>
+        <p>Class: Premium</p>
+        <p class="price">Price: 30000</p>
+        <button class="buy-button">Buy</button>
+      </section>
+      <section id="honda" style="display: none">
+        <h5>Honda</h5>
+        <p>Class: Sport</p>
+        <p class="price">Price: 5000</p>
+        <button class="buy-button">Buy</button>
+      </section>
+      <section id="kawasaki" style="display: none">
+        <h5>Kawasaki</h5>
+        <p>Class: Sport</p>
+        <p class="price">Price: 6000</p>
+        <button class="buy-button">Buy</button>
       </section>
     </div>
     <div id="form-container" style="display: none">
@@ -105,7 +109,7 @@
         <input type="submit" id="send-button" />
       </form>
     </div>
-    <div id="table" style="display: none">
+    <div id="table" style="display: none; margin-left: 500px; margin-top: 30px">
       <h3>Інформація про товар та доставку</h3>
       <table>
         <tr>
@@ -141,6 +145,12 @@
           <td id="res-comment"></td>
         </tr>
       </table>
+    </div>
+
+    <button id="show-orders-btn">Мої замовлення</button>
+    <div id="orders-container" style="display: none; margin-top: 30px">
+      <h3>Ваші замовлення</h3>
+      <ul id="orders-list"></ul>
     </div>
     <script src="index.js"></script>
   </body>

@@ -8,75 +8,74 @@
 // В інформації товару - кнопка "купити"
 // При натисканні на “купити” з'являється повідомлення, що товар куплено та повернення у вихідний стан програми (коли відображається лише список категорій)
 
-let item = document.getElementsByTagName('p');
+const categoryButton = document.querySelectorAll('.category');
+const avtoDiv = document.querySelector('#avto-div');
+const motoDiv = document.querySelector('#moto-div');
 
-for (let i of item) {
-    i.addEventListener('click', function () {
-        showList(i.textContent);
-    });
-}
+categoryButton.forEach(button =>
+    button.addEventListener('click', function () {
+        avtoDiv.style.display = 'none';
+        motoDiv.style.display = 'none';
 
-let avtoList = document.querySelector('.avto');
-let motoList = document.querySelector('.moto');
+        if(button.dataset.target === 'avto') {
+            avtoDiv.style.display = 'block';
+        } else if (button.dataset.target === 'moto') {
+            motoDiv.style.display = 'block';
+        }
+}));
 
-function hiddenList() {
-    avtoList.style.display = 'none';
-    motoList.style.display = 'none';
-}
+const itemsAvto = document.querySelectorAll('#avto-div p');
+const itemsMoto = document.querySelectorAll('#moto-div p');
 
-function showList(item) {
-    hiddenList();
-    if (item === 'AVTO') {
-        avtoList.style.display = 'block';
-    } else if (item === 'MOTO') {
-        motoList.style.display = 'block';
-    }
-}
-
-let avtoOne = document.querySelector('.avto-1');
-let avtoTwo = document.querySelector('.avto-2');
-let motoOne = document.querySelector('.moto-1');
-let motoTwo = document.querySelector('.moto-2');
-
-let avtoItems = avtoList.querySelectorAll('li');
-let motoItems = motoList.querySelectorAll('li');
-
-
-for (let i = 0; i < avtoItems.length; i++) {
-    avtoItems[i].addEventListener('click', function () {
-        showItem(avtoItems[i].textContent);
-    })
-}
-for (let i = 0; i < motoItems.length; i++) {
-    motoItems[i].addEventListener('click', function () {
-        showItem(motoItems[i].textContent);
-    })
-}
-
-function hiddenItems () {
-    avtoOne.style.display = 'none';
-    avtoTwo.style.display = 'none';
-    motoOne.style.display = 'none';
-    motoTwo.style.display = 'none';
-}
+let bmw = document.querySelector('#bmw');
+let audi = document.querySelector('#audi');
+let honda = document.querySelector('#honda');
+let kawasaki = document.querySelector('#kawasaki');
 
 function showItem (item) {
-    hiddenItems()
-    if (item === 'Avto 1') {
-        avtoOne.style.display = 'block';
-    } else if (item === 'Avto 2') {
-        avtoTwo.style.display = 'block';
-    } else if (item === 'Moto 1') {
-        motoOne.style.display = 'block';
-    } else if (item === 'Moto 2') {
-        motoTwo.style.display = 'block';
+    hideItem()
+    if (item === 'BMW') {
+        bmw.style.display = 'block';
+    } else if (item === 'Audi') {
+        audi.style.display = 'block';
+    } else if (item === 'Honda') {
+        honda.style.display = 'block';
+    } else if (item === 'Kawasaki') {
+        kawasaki.style.display = 'block';
     }
 }
 
-let button = document.getElementsByClassName('button');
+function hideItem () {
+    bmw.style.display = 'none';
+    audi.style.display = 'none';
+    honda.style.display = 'none';
+    kawasaki.style.display = 'none';
+}
+
+for (let i = 0; i < itemsAvto.length; i++) {
+    itemsAvto[i].addEventListener('click', function () {
+        showItem(itemsAvto[i].textContent);
+    })
+}
+
+for (let i = 0; i < itemsMoto.length; i++) {
+    itemsMoto[i].addEventListener('click', function () {
+        showItem(itemsMoto[i].textContent);
+    })
+}
+
+let button = document.querySelectorAll('.buy-button');
+let selectedPrice = 0;
 
 for (let i of button) {
     i.addEventListener('click', function () {
+    
+    let productSection = i.closest('section');
+    let priceElement = productSection.querySelector('.price');
+
+    if (priceElement) {
+      selectedPrice = parseInt(priceElement.textContent.replace(/\D/g, ''));
+    }
         formContainer.style.display = 'block';
     })
 }
@@ -101,8 +100,8 @@ form.addEventListener('submit', function (event) {
     const namePattern = /^[А-ЯІЇЄҐа-яіїєґ'’\-]+$/u;
 
     if (!namePattern.test(name) || !namePattern.test(surname) || !namePattern.test(secondName)) {
-    alert("Ім'я, прізвище та по-батькові повинні містити тільки літери!");
-    return;
+        alert("Ім'я, прізвище та по-батькові повинні містити тільки літери!");
+        return;
     };
     document.getElementById('res-name').textContent = name;
     document.getElementById('res-surname').textContent = surname;
@@ -113,10 +112,10 @@ form.addEventListener('submit', function (event) {
         return;
     };
     document.getElementById('res-city').textContent = city.value;
-    
+
     if (!/^\d+$/.test(post)) {
-    alert("Номер відділення пошти має містити тільки цифри!");
-    return;
+        alert("Номер відділення пошти має містити тільки цифри!");
+        return;
     };
     document.getElementById('res-post').textContent = post;
 
@@ -136,7 +135,88 @@ form.addEventListener('submit', function (event) {
 
     table.style.display = 'block';
     form.style.display = 'none';
+    avtoDiv.style.display = 'none';
+    motoDiv.style.display = 'none';
+    hideItem()
 
-    hiddenItems();
-    hiddenList();
-})
+    saveOrderToLocalStorage({
+        name,
+        surname,
+        secondName,
+        city: city.value,
+        post,
+        pay,
+        quantity,
+        comment,
+        date: new Date().toLocaleString(),
+        price: selectedPrice * quantity
+    });
+ 
+});
+
+/// ДЗ 26 Модифікувати інтернет-магазин
+const showOrdersButton = document.querySelector('#show-orders-btn');
+const ordersDiv = document.querySelector('#orders-container');
+const ordersList = document.querySelector('#orders-list');
+
+function saveOrderToLocalStorage(orderData) {
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push(orderData);
+    localStorage.setItem('orders', JSON.stringify(orders));
+}
+
+showOrdersButton.addEventListener('click', function () {
+    ordersDiv.style.display = 'block';
+    ordersList.innerHTML = '';
+
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+    if (orders.length === 0) {
+        let li = document.createElement('li');
+        li.textContent = 'Немає замовлень';
+        ordersList.appendChild(li);
+        return;
+    }
+
+    orders.forEach(function(order, index) {
+        let li = document.createElement('li');
+        li.style.marginBottom = '10px';
+
+        let title = document.createElement('p');
+        title.textContent = `Замовлення від ${order.date} — ${order.price} грн`;
+        title.style.fontWeight = 'bold';
+        title.style.cursor = 'pointer';
+
+        let details = document.createElement('div');
+        details.style.display = 'none';
+        details.style.marginTop = '5px';
+        details.innerHTML = `
+            <p>Ім'я: ${order.name}</p>
+            <p>Прізвище: ${order.surname}</p>
+            <p>По-батькові: ${order.secondName}</p>
+            <p>Місто: ${order.city}</p>
+            <p>Пошта: ${order.post}</p>
+            <p>Оплата: ${order.pay}</p>
+            <p>Кількість: ${order.quantity}</p>
+            <p>Коментар: ${order.comment}</p>
+        `;
+
+        let deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Видалити';
+        deleteBtn.style.marginLeft = '10px';
+        deleteBtn.addEventListener('click', function () {
+            orders.splice(index, 1);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            li.remove();
+        });
+
+        title.addEventListener('click', function () {
+            details.style.display = (details.style.display === 'none') ? 'block' : 'none';
+        });
+
+        li.appendChild(title);
+        li.appendChild(details);
+        li.appendChild(deleteBtn);
+        ordersList.appendChild(li);
+    });
+});
