@@ -3,155 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Інтернет-магазин</title>
+    <title>CRUD-application</title>
   </head>
   <body>
-    <div style="display: flex; flex-direction: row; gap: 50px">
-      <div>
-        <h2>Перелік категорій</h2>
-        <button class="category" data-target="avto">Авто</button>
-        <button class="category" data-target="moto">Мото</button>
-      </div>
-      <div id="avto-div" style="display: none">
-        <h3>Перелік товарів категорії "Авто"</h3>
-        <p>BMW</p>
-        <p>Audi</p>
-      </div>
-      <div id="moto-div" style="display: none">
-        <h3>Перелік товарів категорії "Мото"</h3>
-        <p>Honda</p>
-        <p>Kawasaki</p>
-      </div>
-      <section id="bmw" style="display: none">
-        <h5>BMW</h5>
-        <p>Class: Sport</p>
-        <p class="price">Price: 20000</p>
-        <button class="buy-button">Buy</button>
-      </section>
-      <section id="audi" style="display: none">
-        <h5>Audi</h5>
-        <p>Class: Premium</p>
-        <p class="price">Price: 30000</p>
-        <button class="buy-button">Buy</button>
-      </section>
-      <section id="honda" style="display: none">
-        <h5>Honda</h5>
-        <p>Class: Sport</p>
-        <p class="price">Price: 5000</p>
-        <button class="buy-button">Buy</button>
-      </section>
-      <section id="kawasaki" style="display: none">
-        <h5>Kawasaki</h5>
-        <p>Class: Sport</p>
-        <p class="price">Price: 6000</p>
-        <button class="buy-button">Buy</button>
-      </section>
-    </div>
-    <div id="form-container" style="display: none">
-      <form id="form" action="/final-point.php " method="get">
+    <h1>Список користувачів</h1>
+    <div id="user-list"></div>
+    <button id="add-button">Додати користувача</button>
+    <br />
+    <br />
+    <div id="form-container">
+      <form id="add-form" style="display: none">
         <fieldset>
-          <legend>Форма для реєстрації</legend>
-          <label for="name">Ім'я</label>
-          <input type="text" name="name" id="name" required />
-          <label for="surname">Прізвище</label>
-          <input type="text" name="surname" id="surname" required />
-          <label for="second-name">По-батькові</label>
-          <input
-            type="text"
-            name="second-name"
-            id="second-name"
-            required
-          /><br /><br />
-          <label for="city">Оберіть Ваше місто</label>
-          <select id="city" name="city" required>
-            <option disabled selected>---</option>
-            <option>Київ</option>
-            <option>Дніпро</option>
-            <option>Харків</option>
-            <option>Черкаси</option>
-            <option>Івано-Франківськ</option>
-          </select>
-          <br />
-          <label for="post">Вкажіть відділення Нової Пошти</label>
-          <input type="text" name="post" id="post" required />
-          <br />
-          Оберіть спосіб оплати:
-          <label for="after-pay">Післяплата</label>
-          <input
-            type="radio"
-            id="after-pay"
-            name="pay"
-            value="Післяплата"
-            required
-          />
-          <label for="card-pay">На банківську картку</label>
-          <input
-            type="radio"
-            id="card-pay"
-            name="pay"
-            value="На банківську картку"
-            required
-          />
-          <br />
-          <label for="quantity">Вкажіть кількість одиниць товару</label>
-          <input type="text" name="quantity" id="quantity" required />
-          <br />
-          <br />
-          <label for="comment">Вкажіть коментар до замовлення</label>
-          <textarea
-            id="comment"
-            name="comment"
-            rows="5"
-            cols="30"
-            placeholder="Не більше 500 символів"
-          ></textarea>
+          <legend>Введіть дані користувача</legend>
+          <label for="name"
+            >Ім'я:
+            <input type="text" id="name" required />
+          </label>
+          <br /><br />
+          <label for="email"
+            >Електронна пошта:
+            <input type="email" id="email" required />
+          </label>
+          <br /><br />
+          <button type="submit" id="save-button">Зберегти</button>
+          <button id="cancel-button">Скасувати</button>
         </fieldset>
-        <input type="submit" id="send-button" />
       </form>
     </div>
-    <div id="table" style="display: none; margin-left: 500px; margin-top: 30px">
-      <h3>Інформація про товар та доставку</h3>
-      <table>
-        <tr>
-          <td>Ім'я</td>
-          <td id="res-name"></td>
-        </tr>
-        <tr>
-          <td>Прізвище</td>
-          <td id="res-surname"></td>
-        </tr>
-        <tr>
-          <td>По-батькові</td>
-          <td id="res-second-name"></td>
-        </tr>
-        <tr>
-          <td>Місто</td>
-          <td id="res-city"></td>
-        </tr>
-        <tr>
-          <td>Відділення пошти</td>
-          <td id="res-post"></td>
-        </tr>
-        <tr>
-          <td>Метод оплати</td>
-          <td id="res-pay"></td>
-        </tr>
-        <tr>
-          <td>Кількість</td>
-          <td id="res-quantity"></td>
-        </tr>
-        <tr>
-          <td>Коментарі до замовлення</td>
-          <td id="res-comment"></td>
-        </tr>
-      </table>
-    </div>
-
-    <button id="show-orders-btn">Мої замовлення</button>
-    <div id="orders-container" style="display: none; margin-top: 30px">
-      <h3>Ваші замовлення</h3>
-      <ul id="orders-list"></ul>
-    </div>
+    <div id="details-container"></div>
     <script src="index.js"></script>
   </body>
 </html>

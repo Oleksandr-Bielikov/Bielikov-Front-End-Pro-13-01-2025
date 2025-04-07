@@ -1,222 +1,161 @@
-// Реалізувати подобу інтернет-магазину
+const addButton = document.querySelector('#add-button');
+const userList = document.querySelector('#user-list');
+const formContainer = document.querySelector('#form-container');
+const addForm = document.querySelector('#add-form');
+const saveButton = document.querySelector('#save-button');
+const cancelButton = document.querySelector('#cancel-button');
 
-// Дано 3 блоки
+addButton.addEventListener('click', function () {
+    addForm.style.display = 'block';
+    formContainer.style.display = 'block';
 
-// У лівій частині сторінки – перелік категорій.
-// При натисканні на категорію виводиться у середній блок список товарів цієї категорії.
-// Клік на товар – інформацію про товар у правому блоці.
-// В інформації товару - кнопка "купити"
-// При натисканні на “купити” з'являється повідомлення, що товар куплено та повернення у вихідний стан програми (коли відображається лише список категорій)
+})
 
-const categoryButton = document.querySelectorAll('.category');
-const avtoDiv = document.querySelector('#avto-div');
-const motoDiv = document.querySelector('#moto-div');
+cancelButton.addEventListener('click', function () {
+    addForm.style.display = 'none';
+    formContainer.style.display = 'none';
+})
 
-categoryButton.forEach(button =>
-    button.addEventListener('click', function () {
-        avtoDiv.style.display = 'none';
-        motoDiv.style.display = 'none';
-
-        if(button.dataset.target === 'avto') {
-            avtoDiv.style.display = 'block';
-        } else if (button.dataset.target === 'moto') {
-            motoDiv.style.display = 'block';
-        }
-}));
-
-const itemsAvto = document.querySelectorAll('#avto-div p');
-const itemsMoto = document.querySelectorAll('#moto-div p');
-
-let bmw = document.querySelector('#bmw');
-let audi = document.querySelector('#audi');
-let honda = document.querySelector('#honda');
-let kawasaki = document.querySelector('#kawasaki');
-
-function showItem (item) {
-    hideItem()
-    if (item === 'BMW') {
-        bmw.style.display = 'block';
-    } else if (item === 'Audi') {
-        audi.style.display = 'block';
-    } else if (item === 'Honda') {
-        honda.style.display = 'block';
-    } else if (item === 'Kawasaki') {
-        kawasaki.style.display = 'block';
-    }
-}
-
-function hideItem () {
-    bmw.style.display = 'none';
-    audi.style.display = 'none';
-    honda.style.display = 'none';
-    kawasaki.style.display = 'none';
-}
-
-for (let i = 0; i < itemsAvto.length; i++) {
-    itemsAvto[i].addEventListener('click', function () {
-        showItem(itemsAvto[i].textContent);
-    })
-}
-
-for (let i = 0; i < itemsMoto.length; i++) {
-    itemsMoto[i].addEventListener('click', function () {
-        showItem(itemsMoto[i].textContent);
-    })
-}
-
-let button = document.querySelectorAll('.buy-button');
-let selectedPrice = 0;
-
-for (let i of button) {
-    i.addEventListener('click', function () {
-    
-    let productSection = i.closest('section');
-    let priceElement = productSection.querySelector('.price');
-
-    if (priceElement) {
-      selectedPrice = parseInt(priceElement.textContent.replace(/\D/g, ''));
-    }
-        formContainer.style.display = 'block';
-    })
-}
-
-/// Доповнення інтернет-магазину ДЗ 25
-const form = document.getElementById('form');
-const formContainer = document.getElementById('form-container');
-const table = document.getElementById('table');
-
-form.addEventListener('submit', function (event) {
+addForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    let name = form.elements['name'].value;
-    let surname = form.elements['surname'].value;
-    let secondName = form.elements['second-name'].value;
-    let city = form.elements['city'];
-    let post = form.elements['post'].value;
-    let pay = form.elements['pay'].value;
-    let quantity = form.elements['quantity'].value;
-    let comment = form.elements['comment'].value;
+    const name = addForm.elements['name'].value;
+    const email = addForm.elements['email'].value;
+    const id = Date.now();
 
-    const namePattern = /^[А-ЯІЇЄҐа-яіїєґ'’\-]+$/u;
+    addUserToDOM(name, email, id);
+    addToLocalStorage(name, email, id);
 
-    if (!namePattern.test(name) || !namePattern.test(surname) || !namePattern.test(secondName)) {
-        alert("Ім'я, прізвище та по-батькові повинні містити тільки літери!");
-        return;
-    };
-    document.getElementById('res-name').textContent = name;
-    document.getElementById('res-surname').textContent = surname;
-    document.getElementById('res-second-name').textContent = secondName;
-
-    if (city.selectedIndex === 0) {
-        alert("Оберіть місто!")
-        return;
-    };
-    document.getElementById('res-city').textContent = city.value;
-
-    if (!/^\d+$/.test(post)) {
-        alert("Номер відділення пошти має містити тільки цифри!");
-        return;
-    };
-    document.getElementById('res-post').textContent = post;
-
-    document.getElementById('res-pay').textContent = pay;
-
-    if (isNaN(quantity) || quantity <= 0) {
-        alert("Введіть коректну кількість товару");
-        return;
-    };
-    document.getElementById('res-quantity').textContent = quantity;
-
-    if (comment.length > 500) {
-        alert("Коментар не може перевищувати 500 символів");
-        return;
-    };
-    document.getElementById('res-comment').textContent = comment;
-
-    table.style.display = 'block';
-    form.style.display = 'none';
-    avtoDiv.style.display = 'none';
-    motoDiv.style.display = 'none';
-    hideItem()
-
-    saveOrderToLocalStorage({
-        name,
-        surname,
-        secondName,
-        city: city.value,
-        post,
-        pay,
-        quantity,
-        comment,
-        date: new Date().toLocaleString(),
-        price: selectedPrice * quantity
-    });
- 
+    addForm.reset();
+    formContainer.style.display = 'none';
 });
 
-/// ДЗ 26 Модифікувати інтернет-магазин
-const showOrdersButton = document.querySelector('#show-orders-btn');
-const ordersDiv = document.querySelector('#orders-container');
-const ordersList = document.querySelector('#orders-list');
+function addUserToDOM(name, email, id) {
+    const userDiv = document.createElement('div');
+    userDiv.classList.add('user');
+    userDiv.setAttribute('data-id', id);
 
-function saveOrderToLocalStorage(orderData) {
-    let orders = JSON.parse(localStorage.getItem('orders')) || [];
-    orders.push(orderData);
-    localStorage.setItem('orders', JSON.stringify(orders));
+    userDiv.innerHTML = `
+        <strong>Ім'я</strong> ${name}, 
+        <strong>Email:</strong> ${email}  
+        <button class="view-button">View</button>
+        <button class="edit-button">Edit</button>
+        <button class="remove-button">Remove</button>
+    `;
+
+    userList.appendChild(userDiv);
 }
 
-showOrdersButton.addEventListener('click', function () {
-    ordersDiv.style.display = 'block';
-    ordersList.innerHTML = '';
+function addToLocalStorage(name, email, id) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    users.push({ id, name, email });
+    localStorage.setItem('users', JSON.stringify(users));
+}
 
-        let orders = JSON.parse(localStorage.getItem('orders')) || [];
-
-    if (orders.length === 0) {
-        let li = document.createElement('li');
-        li.textContent = 'Немає замовлень';
-        ordersList.appendChild(li);
-        return;
-    }
-
-    orders.forEach(function(order, index) {
-        let li = document.createElement('li');
-        li.style.marginBottom = '10px';
-
-        let title = document.createElement('p');
-        title.textContent = `Замовлення від ${order.date} — ${order.price} грн`;
-        title.style.fontWeight = 'bold';
-        title.style.cursor = 'pointer';
-
-        let details = document.createElement('div');
-        details.style.display = 'none';
-        details.style.marginTop = '5px';
-        details.innerHTML = `
-            <p>Ім'я: ${order.name}</p>
-            <p>Прізвище: ${order.surname}</p>
-            <p>По-батькові: ${order.secondName}</p>
-            <p>Місто: ${order.city}</p>
-            <p>Пошта: ${order.post}</p>
-            <p>Оплата: ${order.pay}</p>
-            <p>Кількість: ${order.quantity}</p>
-            <p>Коментар: ${order.comment}</p>
-        `;
-
-        let deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Видалити';
-        deleteBtn.style.marginLeft = '10px';
-        deleteBtn.addEventListener('click', function () {
-            orders.splice(index, 1);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            li.remove();
-        });
-
-        title.addEventListener('click', function () {
-            details.style.display = (details.style.display === 'none') ? 'block' : 'none';
-        });
-
-        li.appendChild(title);
-        li.appendChild(details);
-        li.appendChild(deleteBtn);
-        ordersList.appendChild(li);
+window.addEventListener('DOMContentLoaded', () => {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    users.forEach(user => {
+        addUserToDOM(user.name, user.email, user.id);
     });
 });
+
+userList.addEventListener('click', (e) => {
+    const userDiv = e.target.closest('.user');
+    if (!userDiv) return;
+
+    const id = Number(userDiv.getAttribute('data-id'));
+
+    if (e.target.classList.contains('remove-button')) {
+        userDiv.remove();
+        removeFromLocalStorage(id);
+    }
+
+    if (e.target.classList.contains('view-button')) {
+        viewUser(id);
+    }
+
+    if (e.target.classList.contains('edit-button')) {
+        editUser(id);
+    }
+});
+
+function removeFromLocalStorage(id) {
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    users = users.filter(user => user.id !== id);
+    localStorage.setItem('users', JSON.stringify(users));
+}
+
+function viewUser(id) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.id === id);
+
+    const container = document.getElementById('details-container');
+    container.innerHTML = '';
+
+    if (user) {
+        container.innerHTML = `
+            <h3>Перегляд користувача</h3>
+            <p><strong>Ім'я:</strong> ${user.name}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <button onclick="clearDetails()">Закрити</button>
+        `;
+    }
+}
+
+function editUser(id) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.id === id);
+
+    const container = document.getElementById('details-container');
+    container.innerHTML = '';
+
+    if (user) {
+        container.innerHTML = `
+            <h3>Редагувати користувача</h3>
+            <form id="edit-form">
+                <label>
+                    Ім'я:
+                    <input type="text" name="name" value="${user.name}" required />
+                </label>
+                <br /><br />
+                <label>
+                    Email:
+                    <input type="email" name="email" value="${user.email}" required />
+                </label>
+                <br /><br />
+                <button type="submit">Зберегти</button>
+                <button type="button" onclick="clearDetails()">Скасувати</button>
+            </form>
+        `;
+
+        document.getElementById('edit-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const newName = e.target.elements['name'].value;
+            const newEmail = e.target.elements['email'].value;
+
+            user.name = newName;
+            user.email = newEmail;
+
+            localStorage.setItem('users', JSON.stringify(users));
+
+            const userDiv = document.querySelector(`.user[data-id="${id}"]`);
+            if (userDiv) {
+                userDiv.innerHTML = `
+                    <strong>Ім'я</strong> ${newName}, 
+                    <strong>Email:</strong> ${newEmail}  
+                    <button class="view-button">View</button>
+                    <button class="edit-button">Edit</button>
+                    <button class="remove-button">Remove</button>
+                `;
+            }
+
+            clearDetails();
+        });
+    }
+}
+
+function clearDetails() {
+    const container = document.getElementById('details-container');
+    container.innerHTML = '';
+}
