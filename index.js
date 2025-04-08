@@ -1,40 +1,35 @@
-function Human(name, age) {
-    this.name = name;
-    this.age = age;
-    this.getInfo = function () {
-        return `Name: ${this.name}, Age: ${this.age}`;
+class HTMLtag {
+    constructor(tagName) {
+        this.tagName = tagName;
+        this.attributes = [];
     }
-};
 
-function Car(model, year, owner = null) {
-    this.model = model;
-    this.year = year;
-    this.owner = owner;
-    this.info = function () {
-        const ownerInfo = this.owner ? this.owner.getInfo() : "No owner";
-        alert(`Model: ${this.model}. Year: ${this.year}. Owner: ${ownerInfo}`);
-    }
-}
+    createElement() {
+        const element = document.createElement(this.tagName);
 
-function mainFunc() {
-    let userName = prompt("Введіть ім'я");
-        while (!userName || userName === '') {
-            alert("Введіть коректне значення");
-            userName = prompt("Введіть ім'я");
-        }
-    
-    let userAge = prompt("Введіть вік");
-        while (isNaN(userAge) || userAge < 18) {
-            alert("Вік має бути більше 18 років");
-            userAge = prompt("Введіть вік");
+        for (let attr of this.attributes) {
+            element.setAttribute(attr.name, attr.value);
         }
 
-    let person = new Human(userName, parseInt(userAge));
+        if (this.textContent) {
+            element.textContent = this.textContent;
+        }
 
-    let carModel = prompt("Введіть марку авто");
-    let carYear = prompt("Введіть рік авто");
-    let car = new Car(carModel, parseInt(carYear), person);
+        return element;
+    }
 
-    alert(person.getInfo());
-    car.info();
+    setAttributes(attributes) {
+        for (let item of attributes) {
+            this.attributes.push(item);
+        }
+    }
+
+    render(parent = document.body) {
+        let element = this.createElement();
+        parent.appendChild(element);
+    }
+
+    setTextContent(text) {
+        this.textContent = text;
+    }
 }
