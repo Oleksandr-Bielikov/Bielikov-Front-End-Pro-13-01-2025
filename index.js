@@ -1,101 +1,121 @@
-class Student {
+class ApartmentsBuilding {
+    constructor(address) {
+        this.address = address;
+        this.apartments = [];
+    }
 
-    constructor(name, surname, yearOfBirth) {
-        this.name = name;
-        this.surname = surname;
-        this.yearOfBirth = yearOfBirth;
-        this.marks = [];
-        this.logOfVisits = Array(25).fill(null);
-    };
+    addApartments(apartment) {
+        this.apartments.push(apartment)
+    }
+    getBuildingInfo() {
+        let info = `Адреса будинку: ${this.address}<br>`;
+        info += `Кількість квартир: ${this.apartments.length}<br>`;
 
-    // Визначити вік студента
-    getAge() {
-        let year = new Date().getFullYear();
-        return `Студенту ${year - this.yearOfBirth} років`;
-    };
+        this.apartments.forEach(apartment => {
+            info += `Квартира №${apartment.number}:<br>`;
+            apartment.residents.forEach(resident => {
+                info += `  Мешканець: ${resident.name}, Вік: ${resident.age}<br>`;
+            });
+        });
 
-    // Додати оцінку в масив оцінок
-    addMark(mark) {
-        let value = Number(mark);
-        this.marks.push(value);
-    };
-
-    // Визначити середнє значення оцінок
-    getAverageOfMarks() {
-       let resultOfMarks = this.marks.reduce((acc, item) => acc + item, 0) / this.marks.length;
-       return resultOfMarks;
-    };
-
-    // Метод для почергового додавання значень в журнал відвідувань
-    #markVisit(value) {
-        let index = this.logOfVisits.indexOf(null);
-        if(index !== -1) {
-            this.logOfVisits[index] = value;
-        }
-    };
-
-    // Присутній
-    present() {
-        this.#markVisit(true);
-    };
-
-    // Відсутній
-    absent() {
-        this.#markVisit(false);
-    };
-
-    // Визначити середню відвідуваність
-    getAverageOfVisits () {
-        let visits = this.logOfVisits.filter(v => v !== null);
-        if (visits.length === 0) return 0;
-        let resultOfVisits = visits.filter(v => v === true).length / visits.length;
-        return resultOfVisits;
-    };
-    
-    summary () {
-        let averageMarks = this.getAverageOfMarks();
-        let averageVisits = this.getAverageOfVisits();
-
-        if (averageMarks > 90 && averageVisits > 0.9) {
-            return "Молодець!";
-        } else if (averageMarks < 90 && averageVisits < 0.9) {
-            return "Редиска!";
-        } else {
-            return "Добре, але можна краще!";
-        }
-    };
+        return info;
+    }
 }
 
-// Студент 1:
-let studentOne = new Student("Serhiy", "Zhuravel", 1984);
-studentOne.addMark(100);
-studentOne.addMark(100);
-studentOne.present();
-studentOne.present();
+class Apartments {
+    constructor(number) {
+        this.number = number;
+        this.residents = [];
+    }
 
-console.log(studentOne);
-console.log(studentOne.getAge());
-console.log(studentOne.summary());
+    addResidents(resident) {
+        this.residents.push(resident);
+    }
+}
 
-// Студент 2:
-let studentTwo = new Student("Oleksandr", "Bielikov", 1996);
-studentTwo.addMark(95);
-studentTwo.addMark(80);
-studentTwo.present();
-studentTwo.present();
+class Resident {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
 
-console.log(studentTwo);
-console.log(studentTwo.getAge());
-console.log(studentTwo.summary());
+/// --->
+let building = null;
 
-// Студент 3:
-let studentThree = new Student("Elon", "Musk", 1971);
-studentThree.addMark(60);
-studentThree.addMark(60);
-studentThree.present();
-studentThree.absent();
-studentThree.absent();
+let formBuilding = document.querySelector('#building');
+let formApartments = document.querySelector('#apartments');
+let showDataButton = document.querySelector('#showData');
+let buildingDataDiv = document.querySelector('#buildingData');
 
-console.log(studentThree);
-console.log(studentThree.getAge());
-console.log(studentThree.summary());
+formBuilding.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  let address = document.querySelector('#add-building').value;
+
+  if (!address) {
+      alert('Будь ласка, введіть адресу будинку');
+      return;
+  }
+
+  building = new ApartmentsBuilding(address);
+  console.log('Створено новий будинок:', building);
+  formApartments.removeAttribute('hidden');
+})
+
+formApartments.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    let quantityOfApartments = parseInt(document.querySelector('#add-apartments').value);
+
+    if (!quantityOfApartments || quantityOfApartments <= 0) {
+        alert('Будь ласка, введіть кількість квартир');
+        return;
+    }
+
+    for (let i = 0; i < quantityOfApartments; i++) {
+        let apartmentNumber = prompt(`Введіть номер квартири ${i + 1}`);
+
+        if (!apartmentNumber) {
+            alert('Будь ласка, введіть номер квартири');
+            return;
+        }
+
+        let apartment = new Apartments(apartmentNumber);
+        let numberOfResidents = parseInt(prompt(`Кількість мешканців для квартири №${apartmentNumber}:`));
+
+        if (!numberOfResidents || numberOfResidents <= 0) {
+            alert('Будь ласка, введіть кількість мешканців для квартири');
+            return;
+        }
+
+        for (let j = 0; j < numberOfResidents; j++) {
+            let residentName = prompt(`Ім'я мешканця ${j + 1}:`);
+            if (!residentName) {
+                alert("Будь ласка, введіть ім'я мешканця");
+                return;
+            }
+
+            let residentAge = parseInt(prompt(`Вік мешканця ${j + 1}:`));
+            if (!residentAge || residentAge <= 0) {
+                alert('Будь ласка, введіть коректний вік мешканця');
+                return;
+            }
+
+            let resident = new Resident(residentName, residentAge);
+            apartment.addResidents(resident);
+        }
+
+        building.addApartments(apartment);
+    }
+    console.log('Додано квартири з мешканцями:', building);
+    showDataButton.removeAttribute('hidden');
+})
+
+showDataButton.addEventListener('click', function () {
+    if (building) {
+        buildingDataDiv.innerHTML = building.getBuildingInfo();
+    } else {
+        alert('Будинок ще не створений!');
+    }
+})

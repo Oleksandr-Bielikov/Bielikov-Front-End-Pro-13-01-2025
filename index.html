@@ -3,9 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Журнал студентів</title>
+    <title>Багатоквартирний будинок</title>
   </head>
   <body>
+    <form id="building">
+      <input type="text" id="add-building" />
+      <button id="add-building-button">Додати</button>
+    </form>
+    <br />
+    <br />
+    <form id="apartments" hidden>
+      <input type="number" id="add-apartments" />
+      <button>Додати</button>
+    </form>
+    <br />
+    <br />
+    <button id="showData" hidden>Вивести дані про будинок</button>
+    <div id="buildingData"></div>
     <script src="index.js"></script>
   </body>
 </html>
