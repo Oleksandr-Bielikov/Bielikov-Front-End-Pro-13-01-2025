@@ -4,8 +4,8 @@ let nextButton = document.querySelector('#next');
 let slides = slider.querySelectorAll('img');
 let slideIndex = 0;
 
-prevButton.addEventListener('click', showPreviousSlide);
-nextButton.addEventListener('click', showNextSlide);
+prevButton.addEventListener('click', () => changeSlide(-1));
+nextButton.addEventListener('click', () => changeSlide(1));
 
 function updateSlider() {
   for (let i = 0; i < slides.length; i++) {
@@ -15,32 +15,26 @@ function updateSlider() {
       slides[i].style.display = 'none';
     }
   }
-
-  if (slideIndex === 0) {
-    prevButton.disabled = true;
-  } else {
-    prevButton.disabled = false;
-  }
-
-  if (slideIndex === slides.length - 1) {
-    nextButton.disabled = true;
-  } else {
-    nextButton.disabled = false;
-  }
 }
 
-function showPreviousSlide() {
-  if (slideIndex > 0) {
-    slideIndex--;
-    updateSlider();
-  }
+function changeSlide(direction) {
+  slideIndex = (slideIndex + direction + slides.length) % slides.length;
+  updateSlider();
 }
 
-function showNextSlide() {
-  if (slideIndex < slides.length - 1) {
-    slideIndex++;
-    updateSlider();
-  }
-}
+let start = document.querySelector('#start');
+let stop = document.querySelector('#stop');
+let timerID = null;
+
+start.addEventListener('click', () => {
+    timerID = setInterval(() => {
+        changeSlide(1)
+    }, 3000);
+});
+
+stop.addEventListener('click', () => {
+    clearInterval(timerID);
+    timerID = null;
+});
 
 updateSlider();
