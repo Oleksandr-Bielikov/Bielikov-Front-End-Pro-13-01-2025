@@ -1,40 +1,32 @@
-let slider = document.querySelector('.images');
-let prevButton = document.querySelector('#prev');
-let nextButton = document.querySelector('#next');
-let slides = slider.querySelectorAll('img');
-let slideIndex = 0;
+const images = './clock';
+const digits = ['h1', 'h2', 'm1', 'm2', 's1', 's2'];
+let prevDigits = [];
 
-prevButton.addEventListener('click', () => changeSlide(-1));
-nextButton.addEventListener('click', () => changeSlide(1));
-
-function updateSlider() {
-  for (let i = 0; i < slides.length; i++) {
-    if (i === slideIndex) {
-      slides[i].style.display = 'block';
-    } else {
-      slides[i].style.display = 'none';
-    }
-  }
+function pad(num) {
+    return num.toString().padStart(2, '0');
 }
 
-function changeSlide(direction) {
-  slideIndex = (slideIndex + direction + slides.length) % slides.length;
-  updateSlider();
+function getTime() {
+    const now = new Date();
+    const h = pad(now.getHours());
+    const m = pad(now.getMinutes());
+    const s = pad(now.getSeconds());
+    return [...h, ...m, ...s];
 }
 
-let start = document.querySelector('#start');
-let stop = document.querySelector('#stop');
-let timerID = null;
+function updateClock() {
+    const currentDigits = getTime();
 
-start.addEventListener('click', () => {
-    timerID = setInterval(() => {
-        changeSlide(1)
-    }, 3000);
-});
+    currentDigits.forEach((digit, index) => {
+        if (prevDigits[index] !== digit) {
+            const img = document.getElementById(digits[index]);
+            if (img) {
+                img.src = `${images}/${digit}.gif`;
+                prevDigits[index] = digit;
+            }
+        }
+    });
+}
 
-stop.addEventListener('click', () => {
-    clearInterval(timerID);
-    timerID = null;
-});
-
-updateSlider();
+updateClock();
+setInterval(updateClock, 1000);
