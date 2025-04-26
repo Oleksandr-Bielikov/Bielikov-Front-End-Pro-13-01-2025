@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bootstrap and moment.js</title>
+    <link
+      rel="stylesheet"
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <!-- Alert -->
+    <div class="alert alert-info" role="alert" hidden>
+      A simple info alert—check it out!
+    </div>
+
+    <!-- Button trigger modal -->
+    <button
+      id="modalButton"
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      data-bs-placement="bottom"
+      data-bs-title="Кнопка яка відкриває модальне вікно"
+    >
+      Відкрити модальне вікно
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Модальне вікно створене за допомогою бібліотеки Bootstrap
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Закрити
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Button -->
+    <button type="button" class="btn btn-info">Показати/Сховати алерт</button>
+    <br />
+    <br />
+
+    <!-- My date of birth -->
+    <h5 class="myDateOfBirth"></h5>
+
+    <!-- Users date of birth -->
+    <h5 class="usersDateOfBirth"></h5>
+
+    <!--     scripts     -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="node_modules/moment/min/moment.min.js"></script>
+    <script src="node_modules/moment/locale/uk.js"></script>
+    <script>
+      const openModalButton = document.getElementById("modalButton");
+      const tooltip = new bootstrap.Tooltip(openModalButton);
+
+      let alertButton = document.querySelector(".btn-info");
+      let alertInfo = document.querySelector(".alert-info");
+      alertButton.addEventListener("click", () => {
+        alertInfo.toggleAttribute("hidden");
+      });
+
+      let myDateOfBirth = document.querySelector(".myDateOfBirth");
+      moment.locale("uk");
+      myDateOfBirth.textContent = `Моя дата народження: ${moment(
+        "11.07.1996",
+        "DD.MM.YYYY"
+      ).format("LL")}`;
+
+      let usersDateOfBirth = document.querySelector(".usersDateOfBirth");
+
+      function getUserDate() {
+        moment.locale("uk");
+        let date = prompt("Введть дату народження у форматі ДД.ММ.РРРР");
+        if (date === null || date.trim() === "") {
+          alert("введіть коректну дату");
+          getUserDate();
+        } else {
+          usersDateOfBirth.textContent = `Ваша дата народження: ${moment(
+            date,
+            "DD.MM.YYYY"
+          ).format("LL")}`;
+        }
+      }
+      getUserDate();
+    </script>
+  </body>
+</html>
