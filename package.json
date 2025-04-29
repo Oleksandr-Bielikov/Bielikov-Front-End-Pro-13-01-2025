@@ -1,0 +1,29 @@
+{
+  "name": "hillel-front-end-pro",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp default"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oleksandr-Bielikov/Bielikov-Front-End-Pro-13-01-2025.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oleksandr-Bielikov/Bielikov-Front-End-Pro-13-01-2025/issues"
+  },
+  "homepage": "https://github.com/Oleksandr-Bielikov/Bielikov-Front-End-Pro-13-01-2025#readme",
+  "description": "",
+  "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^3.1.0",
+    "gulp-sass": "^6.0.1",
+    "sass": "^1.87.0"
+  }
+}
