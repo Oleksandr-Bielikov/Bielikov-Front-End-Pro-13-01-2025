@@ -40,4 +40,4 @@ export class Latte extends Cappuccino {
         let toppingsNames = this.toppings.map(t => t.name).join(', ') || 'без топінгів';
         return `Латте (${this.size.name}) з: ${toppingsNames}. Ціна: ${this.calculatePrice()} грн.`;
     }
-}
+};

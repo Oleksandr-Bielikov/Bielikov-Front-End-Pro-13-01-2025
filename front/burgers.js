@@ -42,4 +42,4 @@ export class Cheeseburger extends Hamburger {
         let stuffingsNames = this.stuffings.map(s => s.name).join(', ');
         return `Чізбургер (${this.size.name}), додатково: ${stuffingsNames}. Ціна: ${this.calculatePrice()} грн.`;
     }
-}
+};

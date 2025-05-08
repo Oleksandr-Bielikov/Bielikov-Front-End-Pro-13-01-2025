@@ -141,5 +141,3 @@ cardButtons.forEach(button => button.addEventListener('click', (e) => {
         document.querySelector('#card-cheeseburger form').reset();
     }
 }));
-
-
