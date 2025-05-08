@@ -1,6 +1,6 @@
 export class Hamburger {
-    static SIZE_CLASSIC = {name: 'classic size', cost: 60};
-    static SIZE_LARGE = {name: 'large size', cost: 80};
+    static SIZE_CLASSIC = {name: 'hamburger classic size', cost: 60};
+    static SIZE_LARGE = {name: 'hamburger large size', cost: 80};
 
     static STUFFING_CHEESE = {name: 'sheese', cost: 7};
     static STUFFING_MEAT = {name: 'meat', cost: 10};
@@ -31,8 +31,8 @@ export class Hamburger {
 }
 
 export class Cheeseburger extends Hamburger {
-    static SIZE_CLASSIC = {name: 'classic size', cost: 65};
-    static SIZE_LARGE = { name: 'large size', cost: 85 };
+    static SIZE_CLASSIC = {name: 'cheeseburger classic size', cost: 65};
+    static SIZE_LARGE = { name: 'cheeseburger large size', cost: 85 };
     
     constructor(size, stuffings = []) {
      super(size, stuffings);

@@ -1,5 +1,6 @@
 import { Hamburger, Cheeseburger } from "./burgers.js";
 import { Cappuccino, Latte } from "./coffee.js";
+import './style.css';
 
 let menuButtons = document.querySelector('.menu-div');
 let containerCoffee = document.querySelector('#container-coffee');
@@ -8,31 +9,50 @@ let containerOrders = document.querySelector('#container-orders');
 let orders = [];
 
 menuButtons.addEventListener('click', (e) => {
-    if (e.target.id === 'coffee-btn') {
-        containerCoffee.classList.remove('d-none');
-        containerBurger.classList.add('d-none');
-        containerOrders.classList.add('d-none');
-    } else if (e.target.id === 'burgers-btn') {
-        containerCoffee.classList.add('d-none');
-        containerBurger.classList.remove('d-none');
-        containerOrders.classList.add('d-none');
-    } else if (e.target.id === 'orders-btn') {
-        containerCoffee.classList.add('d-none');
-        containerBurger.classList.add('d-none');
-        containerOrders.classList.remove('d-none');
-        if (orders.length === 0) {
-            console.log('кошик пустий')
-        } else {
-            let listHTML = '<ul class="list-group">';
-            orders.forEach(order => {
-            listHTML += `<li class="list-group-item">${order.getDescription()}</li>`;
-        });
-            listHTML += '</ul>';
-            listHTML += '<button type="button" class="btn btn-primary" id="add-order">Оформити замовлення</button>'; // Кнопка після списку
-            containerOrders.innerHTML = listHTML;
-        }
+    switch (e.target.id) {
+        case 'coffee-btn':
+            containerCoffee.classList.remove('d-none');
+            containerBurger.classList.add('d-none');
+            containerOrders.classList.add('d-none');
+            break;
+        case 'burgers-btn':
+            containerCoffee.classList.add('d-none');
+            containerBurger.classList.remove('d-none');
+            containerOrders.classList.add('d-none');
+            break;
+        case 'orders-btn':
+            showOrders()
     }
 });
+
+function showOrders() {
+    containerCoffee.classList.add('d-none');
+    containerBurger.classList.add('d-none');
+    containerOrders.classList.remove('d-none');
+
+    if (orders.length === 0) {
+            console.log('кошик пустий')
+    } else {
+        let listHTML = '<ul class="list-group">';
+        orders.forEach(order => {
+        listHTML += `<li class="list-group-item">${order.getDescription()}</li>`;
+        });
+    listHTML += '</ul>';
+    listHTML += '<button type="button" class="btn btn-primary" id="add-order">Оформити замовлення</button>'; 
+    containerOrders.innerHTML = listHTML;
+    const orderButton = document.querySelector('#add-order');
+        orderButton.addEventListener('click', async () => {
+            await fetch("http://localhost:3000/orders", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(orders),
+        })    
+        });
+    };
+};
+
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 let cardButtons = document.querySelectorAll('.card-body > button');
@@ -121,3 +141,5 @@ cardButtons.forEach(button => button.addEventListener('click', (e) => {
         document.querySelector('#card-cheeseburger form').reset();
     }
 }));
+
+

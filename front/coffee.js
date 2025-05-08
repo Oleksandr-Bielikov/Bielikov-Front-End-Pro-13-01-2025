@@ -1,6 +1,6 @@
 export class Cappuccino {
-    static SIZE_CLASSIC = {name: 'classic size', cost: 40};
-    static SIZE_LARGE = {name: 'large size', cost: 60};
+    static SIZE_CLASSIC = {name: 'cappuccino classic size', cost: 40};
+    static SIZE_LARGE = {name: 'cappuccino large size', cost: 60};
 
     static TOPPING_VANILLA = {name: 'topping vanilla', cost: 5};
     static TOPPING_CHOCOLATE = {name: 'topping chocolate', cost: 7};
@@ -29,8 +29,8 @@ export class Cappuccino {
 }
 
 export class Latte extends Cappuccino {
-    static SIZE_CLASSIC = {name: 'classic size', cost: 45};
-    static SIZE_LARGE = { name: 'large size', cost: 65 };
+    static SIZE_CLASSIC = {name: 'latte classic size', cost: 45};
+    static SIZE_LARGE = { name: 'latte large size', cost: 65 };
     
     constructor(size, toppings = []) {
      super(size, toppings);
