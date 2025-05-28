@@ -1,6 +1,7 @@
 import Button from "../Button";
+import Modal from "../Modal";
 
-function ContactsTable({users, onDelete}) {
+function ContactsTable({users, onDelete, onEdit}) {
     return (
     <>
       <h3>Список контактів</h3>
@@ -10,7 +11,7 @@ function ContactsTable({users, onDelete}) {
                 <th>Ім'я</th>
                 <th>Прізвище</th>
                 <th>Телефон</th>
-                <th>Дії</th>    
+                <th colSpan={2}>Дії</th>    
             </tr>
             </thead>
             <tbody>     
@@ -22,7 +23,8 @@ function ContactsTable({users, onDelete}) {
                         <td>{name}</td>
                         <td>{surname}</td>
                         <td>{user.phone}</td>
-                        <td><Button title={"Видалити"} onClick={() => onDelete(index)}/></td>
+                            <td><Button title={"РЕДАГУВАТИ"} className="edit" onClick={() => onEdit(index)} /></td>
+                            <td><Modal onDelete={onDelete} index={index} /></td>
                     </tr>
                 )
                 })}
