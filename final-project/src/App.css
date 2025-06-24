@@ -1,0 +1,9 @@
+html,
+body,
+#root {
+    width: 1440px;
+    height: 1024px;
+    margin: 0;
+    padding: 0;
+    background-color: #44B26F;
+     }
